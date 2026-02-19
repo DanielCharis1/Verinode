@@ -1,7 +1,8 @@
+#![no_std]
+#[cfg(test)]
 mod test;
 
-pub use test::VerinodeContractClient;
-use soroban_sdk::{contract, contractimpl, contracttype, Address, Env, Symbol, Vec};
+use soroban_sdk::{contract, contractimpl, contracttype, Address, Bytes, Env, String, Vec};
 
 #[contracttype]
 pub enum DataKey {
@@ -11,13 +12,26 @@ pub enum DataKey {
 }
 
 #[contracttype]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub struct Proof {
     pub id: u64,
     pub issuer: Address,
-    pub event_data: Vec<u8>,
+    pub event_data: Bytes,
     pub timestamp: u64,
     pub verified: bool,
-    pub hash: Vec<u8>,
+    pub hash: Bytes,
+}
+
+#[contracttype]
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct ProofVersion {
+    pub version: u32,
+    pub hash: String,
+    pub uri: String,
+    pub timestamp: u64,
+    pub author: Address,
+    pub message: String,
+    pub branch: String,
 }
 
 #[contract]
