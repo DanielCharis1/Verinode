@@ -121,6 +121,11 @@ impl VerinodeContract {
         proofs
     }
 
+    /// Get the admin address
+    pub fn get_admin(env: Env) -> Address {
+        env.storage().instance().get(&DataKey::Admin).unwrap()
+    }
+
     /// Get total proof count
     pub fn get_proof_count(env: Env) -> u64 {
         env.storage().instance().get(&DataKey::ProofCount).unwrap_or(0)
